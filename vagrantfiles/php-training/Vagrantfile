@@ -14,7 +14,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
-  # config.vm.box_url = "http://domain.com/path/to/above.box"
+  config.vm.box_url = "http://scrum.dev.affiliatewindow.com/ubuntu1304.box"
 
   # Set the host name
   config.vm.host_name = "php-training"
@@ -27,6 +27,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
   config.vm.network :private_network, ip: "192.168.33.10"
+
+  # Setup memory usage
+  config.vm.provider "virtualbox" do |v|
+      v.customize ["modifyvm", :id, "--memory", "512"]
+  end
 
   # Share a folder to the vm. Useful for sharing code from the host
   config.vm.synced_folder "/Users/alex/Dev/Source/DigitalWindow/php-training", "/vagrant_data" #, type: "nfs"
@@ -42,12 +47,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       chef.add_recipe "apt"
       chef.add_recipe "git"
       chef.add_recipe "php"
-#      chef.add_recipe "memcached"
 
       # All this should go in site_scrumboard but it started throwing bizarre errors
-      chef.add_recipe "apache2"
-      chef.add_recipe "apache2::mod_php5"
-#      chef.add_recipe "site_scrumboard"
-#      chef.add_recipe "composer"
+      chef.add_recipe "php_site_dev"
   end
 end
