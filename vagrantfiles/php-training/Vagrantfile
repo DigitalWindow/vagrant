@@ -14,7 +14,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
-  config.vm.box_url = "http://scrum.dev.affiliatewindow.com/ubuntu1304.box"
+  config.vm.box_url = "https://s3-eu-west-1.amazonaws.com/awinvagrantboxes/ubuntu1304.box"
 
   # Set the host name
   config.vm.host_name = "php-training"
@@ -28,13 +28,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # using a specific IP.
   config.vm.network :private_network, ip: "192.168.33.10"
 
-  # Setup memory usage
+  # Setup memory usage, change the value if you want it to have more
   config.vm.provider "virtualbox" do |v|
       v.customize ["modifyvm", :id, "--memory", "512"]
   end
 
   # Share a folder to the vm. Useful for sharing code from the host
-  config.vm.synced_folder "/Users/alex/Dev/Source/DigitalWindow/php-training", "/vagrant_data" #, type: "nfs"
+  # note: for Windows users that you need to add double slash in the path
+  # e.g. "C:\\Users\\fred\\php-code"
+  #config.vm.synced_folder "YOUR PHP CODE PATH", "/vagrant_data" #, type: "nfs"
 
   config.vm.provision :chef_solo do |chef|
       ## Chef paths
@@ -46,9 +48,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       # Box Recipes
       chef.add_recipe "apt"
       chef.add_recipe "git"
-      chef.add_recipe "php"
-
-      # All this should go in site_scrumboard but it started throwing bizarre errors
       chef.add_recipe "php_site_dev"
   end
 end
