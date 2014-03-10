@@ -1,0 +1,19 @@
+<VirtualHost *:<%= @params[:server_port] || node['apache']['listen_ports'].first %>>
+  ServerName <%= @params[:server_name] %>
+  DocumentRoot <%= @params[:docroot] %>
+  RewriteEngine On
+
+  <Directory <%= @params[:docroot] %>>
+    Options Indexes FollowSymLinks MultiViews
+
+    AllowOverride None
+
+    Order allow,deny
+    Allow from all
+  </Directory>
+
+
+  LogLevel info
+  ErrorLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-error.log
+  CustomLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-access.log combined
+</VirtualHost>

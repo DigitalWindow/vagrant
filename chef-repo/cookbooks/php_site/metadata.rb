@@ -1,0 +1,5 @@
+name "PHP Site"
+description "Setup basic requirements for a php site"
+depends "php"
+depends "apache2"
+depends "composer"

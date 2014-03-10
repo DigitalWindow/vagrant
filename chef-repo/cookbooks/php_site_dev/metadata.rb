@@ -1,5 +1,3 @@
 name "PHP Site - Dev"
-description "Setup basic requirements from a development php site"
-depends "php"
-depends "apache2"
-#depends "composer"
+description "Setup basic requirements for a development php site"
+depends "php_site"

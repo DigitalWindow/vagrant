@@ -1,6 +1,4 @@
-include_recipe "php"
-include_recipe "apache2"
-include_recipe "apache2::mod_php5"
+include_recipe "php_site"
 
 php_pear "xdebug" do
   # Specify that xdebug.so must be loaded as a zend extension
@@ -16,20 +14,6 @@ end
 #  action :install
 #  directives(:shm_size => "128M", :enable_cli => 0)
 #end
-
-package "php5-intl" do
-  action :install
-end
-
-package "php5-curl" do
-  action :install
-end
-
-package "php5-json" do
-  action :install
-end
-
-#include_recipe "composer"
 
 web_app "php-training" do
   server_name "php-training"
